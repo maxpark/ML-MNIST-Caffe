@@ -1,0 +1,250 @@
+logfile_top5_LeNet.txt  has  30015  lines
+LINE:  six_00447.jpg
+
+PREDICTED:  [ 0.] zero
+EXPECTED :  [ 6.] six
+[Top]0 prob = 0.975883  name = zero
+[Top]1 prob = 0.022951  name = six
+[Top]2 prob = 0.000890  name = four
+[Top]3 prob = 0.000120  name = one
+[Top]4 prob = 0.000106  name = eight
+
+
+LINE:  two_00064.jpg
+
+PREDICTED:  [ 8.] eight
+EXPECTED :  [ 2.] two
+[Top]0 prob = 0.527276  name = eight
+[Top]1 prob = 0.219801  name = seven
+[Top]2 prob = 0.193974  name = two
+[Top]3 prob = 0.049044  name = five
+[Top]4 prob = 0.009657  name = three
+
+
+LINE:  seven_00412.jpg
+
+PREDICTED:  [ 9.] nine
+EXPECTED :  [ 7.] seven
+[Top]0 prob = 0.817071  name = nine
+[Top]1 prob = 0.125302  name = four
+[Top]2 prob = 0.046096  name = seven
+[Top]3 prob = 0.004288  name = three
+[Top]4 prob = 0.003784  name = eight
+
+
+LINE:  three_00034.jpg
+
+PREDICTED:  [ 5.] five
+EXPECTED :  [ 3.] three
+[Top]0 prob = 0.625610  name = five
+[Top]1 prob = 0.295517  name = three
+[Top]2 prob = 0.065939  name = two
+[Top]3 prob = 0.010112  name = seven
+[Top]4 prob = 0.001066  name = eight
+
+
+LINE:  two_00386.jpg
+
+PREDICTED:  [ 6.] six
+EXPECTED :  [ 2.] two
+[Top]0 prob = 0.499953  name = six
+[Top]1 prob = 0.499953  name = two
+[Top]2 prob = 0.000029  name = five
+[Top]3 prob = 0.000023  name = four
+[Top]4 prob = 0.000018  name = zero
+
+
+LINE:  nine_00187.jpg
+
+PREDICTED:  [ 4.] four
+EXPECTED :  [ 9.] nine
+[Top]0 prob = 0.488250  name = four
+[Top]1 prob = 0.335569  name = eight
+[Top]2 prob = 0.139886  name = nine
+[Top]3 prob = 0.024309  name = seven
+[Top]4 prob = 0.006146  name = two
+
+
+LINE:  nine_00117.jpg
+
+PREDICTED:  [ 0.] zero
+EXPECTED :  [ 9.] nine
+[Top]0 prob = 0.264155  name = zero
+[Top]1 prob = 0.205724  name = three
+[Top]2 prob = 0.181551  name = five
+[Top]3 prob = 0.141392  name = two
+[Top]4 prob = 0.097177  name = eight
+
+
+LINE:  seven_00130.jpg
+
+PREDICTED:  [ 1.] one
+EXPECTED :  [ 7.] seven
+[Top]0 prob = 0.856752  name = one
+[Top]1 prob = 0.131387  name = seven
+[Top]2 prob = 0.004496  name = nine
+[Top]3 prob = 0.003090  name = five
+[Top]4 prob = 0.002124  name = eight
+
+
+LINE:  five_00126.jpg
+
+PREDICTED:  [ 6.] six
+EXPECTED :  [ 5.] five
+[Top]0 prob = 0.589903  name = six
+[Top]1 prob = 0.169010  name = five
+[Top]2 prob = 0.131625  name = three
+[Top]3 prob = 0.090465  name = zero
+[Top]4 prob = 0.010804  name = one
+
+
+LINE:  eight_00468.jpg
+
+PREDICTED:  [ 0.] zero
+EXPECTED :  [ 8.] eight
+[Top]0 prob = 0.545861  name = zero
+[Top]1 prob = 0.227549  name = three
+[Top]2 prob = 0.083710  name = eight
+[Top]3 prob = 0.083710  name = five
+[Top]4 prob = 0.057533  name = six
+
+
+LINE:  three_00304.jpg
+
+PREDICTED:  [ 2.] two
+EXPECTED :  [ 3.] three
+[Top]0 prob = 0.394122  name = two
+[Top]1 prob = 0.306942  name = eight
+[Top]2 prob = 0.144989  name = five
+[Top]3 prob = 0.112918  name = three
+[Top]4 prob = 0.019622  name = six
+
+
+LINE:  six_00217.jpg
+
+PREDICTED:  [ 2.] two
+EXPECTED :  [ 6.] six
+[Top]0 prob = 0.854221  name = two
+[Top]1 prob = 0.090034  name = zero
+[Top]2 prob = 0.033122  name = five
+[Top]3 prob = 0.008374  name = eight
+[Top]4 prob = 0.008374  name = six
+
+
+LINE:  nine_00203.jpg
+
+PREDICTED:  [ 2.] two
+EXPECTED :  [ 9.] nine
+[Top]0 prob = 0.881659  name = two
+[Top]1 prob = 0.072371  name = eight
+[Top]2 prob = 0.038737  name = nine
+[Top]3 prob = 0.004083  name = seven
+[Top]4 prob = 0.001929  name = four
+
+
+LINE:  two_00385.jpg
+
+PREDICTED:  [ 5.] five
+EXPECTED :  [ 2.] two
+[Top]0 prob = 0.466023  name = five
+[Top]1 prob = 0.411264  name = two
+[Top]2 prob = 0.103984  name = three
+[Top]3 prob = 0.018070  name = eight
+[Top]4 prob = 0.000331  name = one
+
+
+LINE:  two_00410.jpg
+
+PREDICTED:  [ 6.] six
+EXPECTED :  [ 2.] two
+[Top]0 prob = 0.776940  name = six
+[Top]1 prob = 0.222597  name = two
+[Top]2 prob = 0.000230  name = eight
+[Top]3 prob = 0.000085  name = zero
+[Top]4 prob = 0.000066  name = three
+
+
+LINE:  five_00174.jpg
+
+PREDICTED:  [ 7.] seven
+EXPECTED :  [ 5.] five
+[Top]0 prob = 0.754242  name = seven
+[Top]1 prob = 0.244866  name = five
+[Top]2 prob = 0.000417  name = one
+[Top]3 prob = 0.000287  name = six
+[Top]4 prob = 0.000056  name = three
+
+
+LINE:  five_00032.jpg
+
+PREDICTED:  [ 2.] two
+EXPECTED :  [ 5.] five
+[Top]0 prob = 0.980630  name = two
+[Top]1 prob = 0.013988  name = five
+[Top]2 prob = 0.003121  name = three
+[Top]3 prob = 0.002145  name = eight
+[Top]4 prob = 0.000083  name = nine
+
+
+LINE:  two_00273.jpg
+
+PREDICTED:  [ 4.] four
+EXPECTED :  [ 2.] two
+[Top]0 prob = 0.730424  name = four
+[Top]1 prob = 0.162980  name = two
+[Top]2 prob = 0.046694  name = eight
+[Top]3 prob = 0.028322  name = seven
+[Top]4 prob = 0.028322  name = one
+
+
+LINE:  nine_00303.jpg
+
+PREDICTED:  [ 7.] seven
+EXPECTED :  [ 9.] nine
+[Top]0 prob = 0.721474  name = seven
+[Top]1 prob = 0.067108  name = three
+[Top]2 prob = 0.067108  name = one
+[Top]3 prob = 0.059222  name = nine
+[Top]4 prob = 0.035920  name = two
+
+
+LINE:  six_00089.jpg
+
+PREDICTED:  [ 2.] two
+EXPECTED :  [ 6.] six
+[Top]0 prob = 0.728245  name = two
+[Top]1 prob = 0.267906  name = six
+[Top]2 prob = 0.002318  name = four
+[Top]3 prob = 0.001241  name = zero
+[Top]4 prob = 0.000131  name = eight
+
+
+LINE:  nine_00446.jpg
+
+PREDICTED:  [ 4.] four
+EXPECTED :  [ 9.] nine
+[Top]0 prob = 0.698353  name = four
+[Top]1 prob = 0.291117  name = nine
+[Top]2 prob = 0.005332  name = seven
+[Top]3 prob = 0.002223  name = three
+[Top]4 prob = 0.001348  name = one
+
+
+LINE:  eight_00086.jpg
+
+PREDICTED:  [ 9.] nine
+EXPECTED :  [ 8.] eight
+[Top]0 prob = 0.637606  name = nine
+[Top]1 prob = 0.341286  name = eight
+[Top]2 prob = 0.010306  name = zero
+[Top]3 prob = 0.004868  name = seven
+[Top]4 prob = 0.003791  name = four
+
+
+number of total images predicted  999
+number of top1 false predictions  22
+number of top1 right predictions  977
+number of top5 false predictions  1
+number of top5 right predictions  998
+top1 accuracy = 0.98
+top5 accuracy = 1.00
