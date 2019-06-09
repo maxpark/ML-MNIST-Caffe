@@ -1,0 +1,35 @@
+make: Warning: File 'Makefile' has modification time 2488874 s in the future
+rm -f -rf /root/lenet_zcu102/baseline/build
+rm -f LeNet 
+make: warning:  Clock skew detected.  Your build may be incomplete.
+make: Warning: File 'Makefile' has modification time 2488874 s in the future
+mkdir -p /root/lenet_zcu102/baseline/build 
+g++ -c -O2 -Wall -Wpointer-arith -std=c++11 -ffast-math -mcpu=cortex-a53 /root/lenet_zcu102/baseline/src/main.cc -o /root/lenet_zcu102/baseline/build/main.o
+g++ -O2 -Wall -Wpointer-arith -std=c++11 -ffast-math -mcpu=cortex-a53 /root/lenet_zcu102/baseline/build/main.o /root/lenet_zcu102/baseline/model/arm64_4096/dpu_LeNet_0.elf  -o LeNet -lopencv_dnn -lopencv_highgui -lopencv_shape -lopencv_video -lopencv_videoio -lopencv_imgcodecs -lopencv_imgproc -lopencv_core -lhineon -ln2cube -ldputils -lpthread
+g++ -c -O2 -Wall -Wpointer-arith -std=c++11 -ffast-math -mcpu=cortex-a53 /root/lenet_zcu102/baseline/src/main.conv.cc -o /root/lenet_zcu102/baseline/build/main.conv.o
+g++ -O2 -Wall -Wpointer-arith -std=c++11 -ffast-math -mcpu=cortex-a53 /root/lenet_zcu102/baseline/build/main.conv.o /root/lenet_zcu102/baseline/model/arm64_4096/dpu_LeNet_0.elf  -o LeNet_conv -lopencv_dnn -lopencv_highgui -lopencv_shape -lopencv_video -lopencv_videoio -lopencv_imgcodecs -lopencv_imgproc -lopencv_core -lhineon -ln2cube -ldputils -lpthread
+make: warning:  Clock skew detected.  Your build may be incomplete.
+./LeNet 1
+total image : 5000
+[Time]2488951us
+[FPS]2008.88
+./LeNet 2
+total image : 5000
+[Time]1259872us
+[FPS]3968.66
+./LeNet 3
+total image : 5000
+[Time]982489us
+[FPS]5089.12
+./LeNet 4
+total image : 5000
+[Time]721001us
+[FPS]6934.8
+./LeNet 5
+total image : 5000
+[Time]866814us
+[FPS]5768.25
+./LeNet 6
+total image : 5000
+[Time]1022620us
+[FPS]4889.4
