@@ -1,0 +1,4384 @@
+WARNING: Logging before InitGoogleLogging() is written to STDERR
+W0424 12:56:04.850528 32341 _caffe.cpp:139] DEPRECATION WARNING - deprecated use of Python interface
+W0424 12:56:04.850553 32341 _caffe.cpp:140] Use this instead (with the named "weights" parameter):
+W0424 12:56:04.850554 32341 _caffe.cpp:142] Net('/home/danieleb/ML/mnist/caffe/models/LeNet/m3/deploy_3_LeNet.prototxt', 1, weights='/home/danieleb/ML/mnist/caffe/models/LeNet/m3/snapshot_3_LeNet__iter_3000.caffemodel')
+I0424 12:56:04.851627 32341 upgrade_proto.cpp:79] Attempting to upgrade batch norm layers using deprecated params: /home/danieleb/ML/mnist/caffe/models/LeNet/m3/deploy_3_LeNet.prototxt
+I0424 12:56:04.851636 32341 upgrade_proto.cpp:82] Successfully upgraded batch norm layers using deprecated params.
+I0424 12:56:04.851729 32341 net.cpp:51] Initializing net from parameters: 
+state {
+  phase: TEST
+  level: 0
+}
+layer {
+  name: "data"
+  type: "Input"
+  top: "data"
+  input_param {
+    shape {
+      dim: 1
+      dim: 3
+      dim: 28
+      dim: 28
+    }
+  }
+}
+layer {
+  name: "conv1"
+  type: "Convolution"
+  bottom: "data"
+  top: "conv1"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 20
+    pad: 1
+    kernel_size: 5
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "bn1"
+  type: "BatchNorm"
+  bottom: "conv1"
+  top: "bn1"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "scale1"
+  type: "Scale"
+  bottom: "bn1"
+  top: "scale1"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "relu1"
+  type: "ReLU"
+  bottom: "scale1"
+  top: "relu1"
+}
+layer {
+  name: "pool1"
+  type: "Pooling"
+  bottom: "relu1"
+  top: "pool1"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+  }
+}
+layer {
+  name: "conv2"
+  type: "Convolution"
+  bottom: "pool1"
+  top: "conv2"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 50
+    pad: 1
+    kernel_size: 5
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "bn2"
+  type: "BatchNorm"
+  bottom: "conv2"
+  top: "bn2"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  batch_norm_param {
+    use_global_stats: true
+  }
+}
+layer {
+  name: "scale2"
+  type: "Scale"
+  bottom: "bn2"
+  top: "scale2"
+  scale_param {
+    bias_term: true
+  }
+}
+layer {
+  name: "relu2"
+  type: "ReLU"
+  bottom: "scale2"
+  top: "relu2"
+}
+layer {
+  name: "pool2"
+  type: "Pooling"
+  bottom: "relu2"
+  top: "pool2"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+  }
+}
+layer {
+  name: "fc1"
+  type: "InnerProduct"
+  bottom: "pool2"
+  top: "fc1"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 500
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+      value: 1
+    }
+  }
+}
+layer {
+  name: "relu3"
+  type: "ReLU"
+  bottom: "fc1"
+  top: "relu3"
+}
+layer {
+  name: "fc2"
+  type: "InnerProduct"
+  bottom: "relu3"
+  top: "fc2"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 10
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+      value: 1
+    }
+  }
+}
+layer {
+  name: "prob"
+  type: "Softmax"
+  bottom: "fc2"
+  top: "prob"
+}
+I0424 12:56:04.851779 32341 layer_factory.hpp:77] Creating layer data
+I0424 12:56:04.851785 32341 net.cpp:84] Creating Layer data
+I0424 12:56:04.851791 32341 net.cpp:380] data -> data
+I0424 12:56:04.860695 32341 net.cpp:122] Setting up data
+I0424 12:56:04.860710 32341 net.cpp:129] Top shape: 1 3 28 28 (2352)
+I0424 12:56:04.860713 32341 net.cpp:137] Memory required for data: 9408
+I0424 12:56:04.860716 32341 layer_factory.hpp:77] Creating layer conv1
+I0424 12:56:04.860730 32341 net.cpp:84] Creating Layer conv1
+I0424 12:56:04.860733 32341 net.cpp:406] conv1 <- data
+I0424 12:56:04.860738 32341 net.cpp:380] conv1 -> conv1
+I0424 12:56:05.522300 32341 net.cpp:122] Setting up conv1
+I0424 12:56:05.522325 32341 net.cpp:129] Top shape: 1 20 26 26 (13520)
+I0424 12:56:05.522327 32341 net.cpp:137] Memory required for data: 63488
+I0424 12:56:05.522356 32341 layer_factory.hpp:77] Creating layer bn1
+I0424 12:56:05.522367 32341 net.cpp:84] Creating Layer bn1
+I0424 12:56:05.522368 32341 net.cpp:406] bn1 <- conv1
+I0424 12:56:05.522374 32341 net.cpp:380] bn1 -> bn1
+I0424 12:56:05.522497 32341 net.cpp:122] Setting up bn1
+I0424 12:56:05.522502 32341 net.cpp:129] Top shape: 1 20 26 26 (13520)
+I0424 12:56:05.522505 32341 net.cpp:137] Memory required for data: 117568
+I0424 12:56:05.522511 32341 layer_factory.hpp:77] Creating layer scale1
+I0424 12:56:05.522517 32341 net.cpp:84] Creating Layer scale1
+I0424 12:56:05.522519 32341 net.cpp:406] scale1 <- bn1
+I0424 12:56:05.522522 32341 net.cpp:380] scale1 -> scale1
+I0424 12:56:05.522544 32341 layer_factory.hpp:77] Creating layer scale1
+I0424 12:56:05.522611 32341 net.cpp:122] Setting up scale1
+I0424 12:56:05.522615 32341 net.cpp:129] Top shape: 1 20 26 26 (13520)
+I0424 12:56:05.522617 32341 net.cpp:137] Memory required for data: 171648
+I0424 12:56:05.522620 32341 layer_factory.hpp:77] Creating layer relu1
+I0424 12:56:05.522624 32341 net.cpp:84] Creating Layer relu1
+I0424 12:56:05.522626 32341 net.cpp:406] relu1 <- scale1
+I0424 12:56:05.522629 32341 net.cpp:380] relu1 -> relu1
+I0424 12:56:05.522706 32341 net.cpp:122] Setting up relu1
+I0424 12:56:05.522711 32341 net.cpp:129] Top shape: 1 20 26 26 (13520)
+I0424 12:56:05.522712 32341 net.cpp:137] Memory required for data: 225728
+I0424 12:56:05.522714 32341 layer_factory.hpp:77] Creating layer pool1
+I0424 12:56:05.522718 32341 net.cpp:84] Creating Layer pool1
+I0424 12:56:05.522720 32341 net.cpp:406] pool1 <- relu1
+I0424 12:56:05.522723 32341 net.cpp:380] pool1 -> pool1
+I0424 12:56:05.522742 32341 net.cpp:122] Setting up pool1
+I0424 12:56:05.522745 32341 net.cpp:129] Top shape: 1 20 13 13 (3380)
+I0424 12:56:05.522747 32341 net.cpp:137] Memory required for data: 239248
+I0424 12:56:05.522749 32341 layer_factory.hpp:77] Creating layer conv2
+I0424 12:56:05.522756 32341 net.cpp:84] Creating Layer conv2
+I0424 12:56:05.522758 32341 net.cpp:406] conv2 <- pool1
+I0424 12:56:05.522761 32341 net.cpp:380] conv2 -> conv2
+I0424 12:56:05.523375 32341 net.cpp:122] Setting up conv2
+I0424 12:56:05.523386 32341 net.cpp:129] Top shape: 1 50 11 11 (6050)
+I0424 12:56:05.523387 32341 net.cpp:137] Memory required for data: 263448
+I0424 12:56:05.523394 32341 layer_factory.hpp:77] Creating layer bn2
+I0424 12:56:05.523401 32341 net.cpp:84] Creating Layer bn2
+I0424 12:56:05.523403 32341 net.cpp:406] bn2 <- conv2
+I0424 12:56:05.523408 32341 net.cpp:380] bn2 -> bn2
+I0424 12:56:05.523524 32341 net.cpp:122] Setting up bn2
+I0424 12:56:05.523527 32341 net.cpp:129] Top shape: 1 50 11 11 (6050)
+I0424 12:56:05.523530 32341 net.cpp:137] Memory required for data: 287648
+I0424 12:56:05.523535 32341 layer_factory.hpp:77] Creating layer scale2
+I0424 12:56:05.523540 32341 net.cpp:84] Creating Layer scale2
+I0424 12:56:05.523541 32341 net.cpp:406] scale2 <- bn2
+I0424 12:56:05.523545 32341 net.cpp:380] scale2 -> scale2
+I0424 12:56:05.523564 32341 layer_factory.hpp:77] Creating layer scale2
+I0424 12:56:05.523623 32341 net.cpp:122] Setting up scale2
+I0424 12:56:05.523627 32341 net.cpp:129] Top shape: 1 50 11 11 (6050)
+I0424 12:56:05.523630 32341 net.cpp:137] Memory required for data: 311848
+I0424 12:56:05.523633 32341 layer_factory.hpp:77] Creating layer relu2
+I0424 12:56:05.523636 32341 net.cpp:84] Creating Layer relu2
+I0424 12:56:05.523638 32341 net.cpp:406] relu2 <- scale2
+I0424 12:56:05.523641 32341 net.cpp:380] relu2 -> relu2
+I0424 12:56:05.523824 32341 net.cpp:122] Setting up relu2
+I0424 12:56:05.523830 32341 net.cpp:129] Top shape: 1 50 11 11 (6050)
+I0424 12:56:05.523833 32341 net.cpp:137] Memory required for data: 336048
+I0424 12:56:05.523835 32341 layer_factory.hpp:77] Creating layer pool2
+I0424 12:56:05.523839 32341 net.cpp:84] Creating Layer pool2
+I0424 12:56:05.523841 32341 net.cpp:406] pool2 <- relu2
+I0424 12:56:05.523845 32341 net.cpp:380] pool2 -> pool2
+I0424 12:56:05.523865 32341 net.cpp:122] Setting up pool2
+I0424 12:56:05.523870 32341 net.cpp:129] Top shape: 1 50 6 6 (1800)
+I0424 12:56:05.523871 32341 net.cpp:137] Memory required for data: 343248
+I0424 12:56:05.523874 32341 layer_factory.hpp:77] Creating layer fc1
+I0424 12:56:05.523878 32341 net.cpp:84] Creating Layer fc1
+I0424 12:56:05.523880 32341 net.cpp:406] fc1 <- pool2
+I0424 12:56:05.523883 32341 net.cpp:380] fc1 -> fc1
+I0424 12:56:05.527989 32341 net.cpp:122] Setting up fc1
+I0424 12:56:05.528000 32341 net.cpp:129] Top shape: 1 500 (500)
+I0424 12:56:05.528002 32341 net.cpp:137] Memory required for data: 345248
+I0424 12:56:05.528008 32341 layer_factory.hpp:77] Creating layer relu3
+I0424 12:56:05.528012 32341 net.cpp:84] Creating Layer relu3
+I0424 12:56:05.528015 32341 net.cpp:406] relu3 <- fc1
+I0424 12:56:05.528018 32341 net.cpp:380] relu3 -> relu3
+I0424 12:56:05.528105 32341 net.cpp:122] Setting up relu3
+I0424 12:56:05.528110 32341 net.cpp:129] Top shape: 1 500 (500)
+I0424 12:56:05.528110 32341 net.cpp:137] Memory required for data: 347248
+I0424 12:56:05.528112 32341 layer_factory.hpp:77] Creating layer fc2
+I0424 12:56:05.528117 32341 net.cpp:84] Creating Layer fc2
+I0424 12:56:05.528120 32341 net.cpp:406] fc2 <- relu3
+I0424 12:56:05.528123 32341 net.cpp:380] fc2 -> fc2
+I0424 12:56:05.528200 32341 net.cpp:122] Setting up fc2
+I0424 12:56:05.528203 32341 net.cpp:129] Top shape: 1 10 (10)
+I0424 12:56:05.528205 32341 net.cpp:137] Memory required for data: 347288
+I0424 12:56:05.528211 32341 layer_factory.hpp:77] Creating layer prob
+I0424 12:56:05.528215 32341 net.cpp:84] Creating Layer prob
+I0424 12:56:05.528218 32341 net.cpp:406] prob <- fc2
+I0424 12:56:05.528219 32341 net.cpp:380] prob -> prob
+I0424 12:56:05.528426 32341 net.cpp:122] Setting up prob
+I0424 12:56:05.528432 32341 net.cpp:129] Top shape: 1 10 (10)
+I0424 12:56:05.528434 32341 net.cpp:137] Memory required for data: 347328
+I0424 12:56:05.528435 32341 net.cpp:200] prob does not need backward computation.
+I0424 12:56:05.528439 32341 net.cpp:200] fc2 does not need backward computation.
+I0424 12:56:05.528440 32341 net.cpp:200] relu3 does not need backward computation.
+I0424 12:56:05.528442 32341 net.cpp:200] fc1 does not need backward computation.
+I0424 12:56:05.528445 32341 net.cpp:200] pool2 does not need backward computation.
+I0424 12:56:05.528447 32341 net.cpp:200] relu2 does not need backward computation.
+I0424 12:56:05.528448 32341 net.cpp:200] scale2 does not need backward computation.
+I0424 12:56:05.528450 32341 net.cpp:200] bn2 does not need backward computation.
+I0424 12:56:05.528452 32341 net.cpp:200] conv2 does not need backward computation.
+I0424 12:56:05.528455 32341 net.cpp:200] pool1 does not need backward computation.
+I0424 12:56:05.528456 32341 net.cpp:200] relu1 does not need backward computation.
+I0424 12:56:05.528458 32341 net.cpp:200] scale1 does not need backward computation.
+I0424 12:56:05.528461 32341 net.cpp:200] bn1 does not need backward computation.
+I0424 12:56:05.528463 32341 net.cpp:200] conv1 does not need backward computation.
+I0424 12:56:05.528465 32341 net.cpp:200] data does not need backward computation.
+I0424 12:56:05.528467 32341 net.cpp:242] This network produces output prob
+I0424 12:56:05.528475 32341 net.cpp:255] Network initialization done.
+I0424 12:56:05.530766 32341 upgrade_proto.cpp:79] Attempting to upgrade batch norm layers using deprecated params: /home/danieleb/ML/mnist/caffe/models/LeNet/m3/snapshot_3_LeNet__iter_3000.caffemodel
+I0424 12:56:05.530774 32341 upgrade_proto.cpp:82] Successfully upgraded batch norm layers using deprecated params.
+I0424 12:56:05.531107 32341 net.cpp:744] Ignoring source layer loss
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00052.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00085.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00079.jpg
+PREDICTED: 5
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00070.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00059.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00049.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00020.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00045.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00038.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00039.jpg
+PREDICTED: 8
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00085.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00025.jpg
+PREDICTED: 3
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00063.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00042.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00050.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00086.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00024.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00059.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00010.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00063.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00037.jpg
+PREDICTED: 3
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00057.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00015.jpg
+PREDICTED: 5
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00056.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00003.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00030.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00006.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00073.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00056.jpg
+PREDICTED: 1
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00028.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00012.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00076.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00086.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00078.jpg
+PREDICTED: 5
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00095.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00004.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00061.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00045.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00084.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00029.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00004.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00068.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00020.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00014.jpg
+PREDICTED: 5
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00072.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00037.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00036.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00016.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00017.jpg
+PREDICTED: 9
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00008.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00054.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00028.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00060.jpg
+PREDICTED: 2
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00091.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00025.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00061.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00040.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00075.jpg
+PREDICTED: 5
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00088.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00001.jpg
+PREDICTED: 2
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00023.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00049.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00041.jpg
+PREDICTED: 7
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00012.jpg
+PREDICTED: 5
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00098.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00100.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00057.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00047.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00046.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00015.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00008.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00094.jpg
+PREDICTED: 1
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00078.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00092.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00025.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00079.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00045.jpg
+PREDICTED: 5
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00066.jpg
+PREDICTED: 5
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00014.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00077.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00099.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00087.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00100.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00067.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00077.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00073.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00068.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00069.jpg
+PREDICTED: 6
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00077.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00094.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00077.jpg
+PREDICTED: 3
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00009.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00036.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00013.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00002.jpg
+PREDICTED: 5
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00035.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00098.jpg
+PREDICTED: 5
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00032.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00011.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00077.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00055.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00079.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00008.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00033.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00005.jpg
+PREDICTED: 5
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00075.jpg
+PREDICTED: 7
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00032.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00065.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00037.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00028.jpg
+PREDICTED: 3
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00082.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00056.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00094.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00086.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00092.jpg
+PREDICTED: 5
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00009.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00058.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00021.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00016.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00023.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00077.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00088.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00023.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00006.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00071.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00067.jpg
+PREDICTED: 5
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00017.jpg
+PREDICTED: 9
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00027.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00015.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00094.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00019.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00087.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00052.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00018.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00100.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00011.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00015.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00013.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00095.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00030.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00023.jpg
+PREDICTED: 5
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00036.jpg
+PREDICTED: 7
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00003.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00003.jpg
+PREDICTED: 7
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00072.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00090.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00043.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00016.jpg
+PREDICTED: 3
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00059.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00047.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00078.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00033.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00100.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00087.jpg
+PREDICTED: 8
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00083.jpg
+PREDICTED: 3
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00060.jpg
+PREDICTED: 5
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00061.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00006.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00071.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00034.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00028.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00058.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00068.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00018.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00050.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00081.jpg
+PREDICTED: 5
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00048.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00081.jpg
+PREDICTED: 9
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00040.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00089.jpg
+PREDICTED: 5
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00029.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00003.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00006.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00074.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00048.jpg
+PREDICTED: 7
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00058.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00051.jpg
+PREDICTED: 5
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00093.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00100.jpg
+PREDICTED: 8
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00060.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00085.jpg
+PREDICTED: 5
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00013.jpg
+PREDICTED: 3
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00062.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00038.jpg
+PREDICTED: 5
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00041.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00040.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00084.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00039.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00057.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00064.jpg
+PREDICTED: 5
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00007.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00079.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00029.jpg
+PREDICTED: 7
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00001.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00071.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00086.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00082.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00011.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00021.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00068.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00013.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00075.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00053.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00012.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00089.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00053.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00050.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00048.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00020.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00048.jpg
+PREDICTED: 3
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00096.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00078.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00051.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00024.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00054.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00059.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00055.jpg
+PREDICTED: 3
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00073.jpg
+PREDICTED: 3
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00074.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00029.jpg
+PREDICTED: 3
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00022.jpg
+PREDICTED: 5
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00065.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00020.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00022.jpg
+PREDICTED: 5
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00038.jpg
+PREDICTED: 8
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00034.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00053.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00090.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00099.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00045.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00074.jpg
+PREDICTED: 7
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00002.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00073.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00046.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00016.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00018.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00030.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00037.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00044.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00024.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00078.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00084.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00007.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00062.jpg
+PREDICTED: 2
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00076.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00020.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00042.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00077.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00083.jpg
+PREDICTED: 5
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00095.jpg
+PREDICTED: 8
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00099.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00063.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00077.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00063.jpg
+PREDICTED: 8
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00017.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00084.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00030.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00085.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00053.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00064.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00030.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00010.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00047.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00083.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00039.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00065.jpg
+PREDICTED: 5
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00068.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00037.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00074.jpg
+PREDICTED: 5
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00096.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00038.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00067.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00082.jpg
+PREDICTED: 3
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00015.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00054.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00012.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00093.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00082.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00084.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00080.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00021.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00083.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00097.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00099.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00098.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00031.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00054.jpg
+PREDICTED: 5
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00068.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00055.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00076.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00064.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00043.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00089.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00009.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00045.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00022.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00081.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00092.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00097.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00029.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00023.jpg
+PREDICTED: 5
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00097.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00013.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00098.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00088.jpg
+PREDICTED: 5
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00023.jpg
+PREDICTED: 1
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00091.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00087.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00076.jpg
+PREDICTED: 8
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00047.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00046.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00028.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00015.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00037.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00090.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00017.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00014.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00042.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00033.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00029.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00002.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00033.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00017.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00042.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00052.jpg
+PREDICTED: 7
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00082.jpg
+PREDICTED: 5
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00010.jpg
+PREDICTED: 7
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00012.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00050.jpg
+PREDICTED: 5
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00061.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00035.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00044.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00064.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00046.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00012.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00062.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00082.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00060.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00041.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00097.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00064.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00027.jpg
+PREDICTED: 5
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00005.jpg
+PREDICTED: 5
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00051.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00031.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00041.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00026.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00044.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00085.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00021.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00004.jpg
+PREDICTED: 3
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00066.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00014.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00087.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00035.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00056.jpg
+PREDICTED: 3
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00046.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00016.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00096.jpg
+PREDICTED: 3
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00054.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00047.jpg
+PREDICTED: 3
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00094.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00039.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00089.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00098.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00091.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00080.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00004.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00072.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00037.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00034.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00041.jpg
+PREDICTED: 7
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00038.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00011.jpg
+PREDICTED: 5
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00098.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00023.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00027.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00066.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00078.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00031.jpg
+PREDICTED: 3
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00058.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00055.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00037.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00029.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00027.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00088.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00062.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00065.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00031.jpg
+PREDICTED: 5
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00088.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00065.jpg
+PREDICTED: 5
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00053.jpg
+PREDICTED: 5
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00087.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00012.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00055.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00096.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00025.jpg
+PREDICTED: 3
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00051.jpg
+PREDICTED: 5
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00076.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00005.jpg
+PREDICTED: 8
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00082.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00088.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00055.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00050.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00085.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00090.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00031.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00018.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00034.jpg
+PREDICTED: 5
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00063.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00081.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00028.jpg
+PREDICTED: 5
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00021.jpg
+PREDICTED: 3
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00026.jpg
+PREDICTED: 5
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00032.jpg
+PREDICTED: 2
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00059.jpg
+PREDICTED: 5
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00043.jpg
+PREDICTED: 7
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00025.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00075.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00042.jpg
+PREDICTED: 7
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00004.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00033.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00051.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00074.jpg
+PREDICTED: 3
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00095.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00025.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00026.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00081.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00070.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00047.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00080.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00062.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00026.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00042.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00068.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00011.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00090.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00068.jpg
+PREDICTED: 5
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00093.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00071.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00051.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00072.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00053.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00092.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00010.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00097.jpg
+PREDICTED: 3
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00095.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00086.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00021.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00050.jpg
+PREDICTED: 5
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00049.jpg
+PREDICTED: 7
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00050.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00070.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00095.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00056.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00017.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00099.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00036.jpg
+PREDICTED: 5
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00094.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00032.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00084.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00057.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00051.jpg
+PREDICTED: 5
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00046.jpg
+PREDICTED: 8
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00093.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00043.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00004.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00086.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00055.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00057.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00052.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00084.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00029.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00095.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00046.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00079.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00049.jpg
+PREDICTED: 8
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00041.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00037.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00097.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00005.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00071.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00096.jpg
+PREDICTED: 5
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00063.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00020.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00031.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00065.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00056.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00069.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00083.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00048.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00024.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00093.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00070.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00030.jpg
+PREDICTED: 5
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00054.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00009.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00065.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00042.jpg
+PREDICTED: 5
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00089.jpg
+PREDICTED: 8
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00042.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00068.jpg
+PREDICTED: 5
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00066.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00094.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00060.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00003.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00062.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00033.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00044.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00093.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00052.jpg
+PREDICTED: 5
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00052.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00090.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00027.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00091.jpg
+PREDICTED: 3
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00070.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00089.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00001.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00069.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00093.jpg
+PREDICTED: 3
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00087.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00043.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00093.jpg
+PREDICTED: 5
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00041.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00039.jpg
+PREDICTED: 5
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00058.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00064.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00029.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00022.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00039.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00073.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00008.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00080.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00006.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00038.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00091.jpg
+PREDICTED: 7
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00093.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00095.jpg
+PREDICTED: 5
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00087.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00003.jpg
+PREDICTED: 3
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00083.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00024.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00029.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00015.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00018.jpg
+PREDICTED: 5
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00049.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00071.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00040.jpg
+PREDICTED: 5
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00009.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00038.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00008.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00088.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00050.jpg
+PREDICTED: 5
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00001.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00069.jpg
+PREDICTED: 5
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00096.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00019.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00045.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00099.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00020.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00028.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00039.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00004.jpg
+PREDICTED: 5
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00030.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00089.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00080.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00085.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00099.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00032.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00018.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00063.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00041.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00086.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00035.jpg
+PREDICTED: 3
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00049.jpg
+PREDICTED: 5
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00080.jpg
+PREDICTED: 9
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00019.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00044.jpg
+PREDICTED: 5
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00092.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00007.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00049.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00054.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00089.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00002.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00081.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00081.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00070.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00059.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00024.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00034.jpg
+PREDICTED: 8
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00060.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00066.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00076.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00083.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00051.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00005.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00034.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00099.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00034.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00020.jpg
+PREDICTED: 5
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00091.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00083.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00092.jpg
+PREDICTED: 5
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00042.jpg
+PREDICTED: 3
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00023.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00084.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00035.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00008.jpg
+PREDICTED: 3
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00056.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00090.jpg
+PREDICTED: 3
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00041.jpg
+PREDICTED: 7
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00014.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00080.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00066.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00019.jpg
+PREDICTED: 8
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00035.jpg
+PREDICTED: 5
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00036.jpg
+PREDICTED: 5
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00023.jpg
+PREDICTED: 5
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00075.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00082.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00043.jpg
+PREDICTED: 3
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00047.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00081.jpg
+PREDICTED: 3
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00005.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00018.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00059.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00058.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00021.jpg
+PREDICTED: 5
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00021.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00014.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00044.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00040.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00097.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00006.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00066.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00016.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00037.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00064.jpg
+PREDICTED: 5
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00047.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00027.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00094.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00010.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00033.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00091.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00069.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00067.jpg
+PREDICTED: 9
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00080.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00033.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00093.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00027.jpg
+PREDICTED: 5
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00061.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00074.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00098.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00045.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00001.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00082.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00010.jpg
+PREDICTED: 5
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00036.jpg
+PREDICTED: 3
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00027.jpg
+PREDICTED: 2
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00059.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00026.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00028.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00090.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00069.jpg
+PREDICTED: 8
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00073.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00073.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00028.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00002.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00008.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00036.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00005.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00097.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00022.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00019.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00075.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00053.jpg
+PREDICTED: 7
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00062.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00066.jpg
+PREDICTED: 9
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00019.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00048.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00044.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00007.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00024.jpg
+PREDICTED: 3
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00072.jpg
+PREDICTED: 7
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00067.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00004.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00024.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00005.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00010.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00100.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00082.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00016.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00047.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00019.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00031.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00016.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00067.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00062.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00067.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00040.jpg
+PREDICTED: 5
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00034.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00032.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00012.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00097.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00002.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00009.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00053.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00063.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00056.jpg
+PREDICTED: 5
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00094.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00075.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00054.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00056.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00070.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00033.jpg
+PREDICTED: 7
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00038.jpg
+PREDICTED: 5
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00034.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00060.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00036.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00003.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00025.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00090.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00085.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00025.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00016.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00018.jpg
+PREDICTED: 3
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00055.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00096.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00011.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00007.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00066.jpg
+PREDICTED: 8
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00041.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00100.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00053.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00073.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00036.jpg
+PREDICTED: 3
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00010.jpg
+PREDICTED: 5
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00011.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00058.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00014.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00058.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00001.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00057.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00002.jpg
+PREDICTED: 3
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00025.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00007.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00020.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00078.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00059.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00072.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00072.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00092.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00044.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00053.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00027.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00080.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00061.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00022.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00046.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00088.jpg
+PREDICTED: 3
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00086.jpg
+PREDICTED: 9
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00019.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00009.jpg
+PREDICTED: 3
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00076.jpg
+PREDICTED: 5
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00012.jpg
+PREDICTED: 5
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00089.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00072.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00079.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00074.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00009.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00008.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00002.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00039.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00072.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00074.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00008.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00095.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00074.jpg
+PREDICTED: 5
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00049.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00055.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00081.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00023.jpg
+PREDICTED: 5
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00045.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00074.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00019.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00006.jpg
+PREDICTED: 8
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00013.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00062.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00088.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00035.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00091.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00069.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00048.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00022.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00067.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00007.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00035.jpg
+PREDICTED: 5
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00001.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00027.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00076.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00026.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00040.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00044.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00014.jpg
+PREDICTED: 3
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00013.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00091.jpg
+PREDICTED: 3
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00083.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00088.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00056.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00010.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00035.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00052.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00100.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00040.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00073.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00014.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00011.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00054.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00005.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00017.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00039.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00079.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00011.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00061.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00015.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00030.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00015.jpg
+PREDICTED: 3
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00044.jpg
+PREDICTED: 5
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00071.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00013.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00098.jpg
+PREDICTED: 2
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00065.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00049.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00040.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00069.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00026.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00092.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00034.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00076.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00002.jpg
+PREDICTED: 7
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00032.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00035.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00006.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00039.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00099.jpg
+PREDICTED: 2
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00084.jpg
+PREDICTED: 5
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00030.jpg
+PREDICTED: 8
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00008.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00079.jpg
+PREDICTED: 5
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00065.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00007.jpg
+PREDICTED: 8
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00048.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00095.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00017.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00083.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00063.jpg
+PREDICTED: 5
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00016.jpg
+PREDICTED: 5
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00004.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00085.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00022.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00063.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00090.jpg
+PREDICTED: 2
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00012.jpg
+PREDICTED: 3
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00100.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00098.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00067.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00064.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00014.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00032.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00052.jpg
+PREDICTED: 5
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00065.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00006.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00075.jpg
+PREDICTED: 5
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00046.jpg
+PREDICTED: 6
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00006.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00067.jpg
+PREDICTED: 5
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00070.jpg
+PREDICTED: 3
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00062.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00038.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00069.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00031.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00080.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00017.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00032.jpg
+PREDICTED: 7
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00033.jpg
+PREDICTED: 5
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00060.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00051.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00021.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00081.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00022.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00050.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00003.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00092.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00045.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00049.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00094.jpg
+PREDICTED: 5
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00058.jpg
+PREDICTED: 3
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00010.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00073.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00057.jpg
+PREDICTED: 8
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00031.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00026.jpg
+PREDICTED: 3
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00026.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00061.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00045.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00058.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00001.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00084.jpg
+PREDICTED: 5
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00055.jpg
+PREDICTED: 1
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00092.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00018.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00024.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00007.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00068.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00050.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00061.jpg
+PREDICTED: 7
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00100.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00066.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00060.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00087.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00079.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00052.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00004.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00009.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00078.jpg
+PREDICTED: 8
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00089.jpg
+PREDICTED: 2
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00007.jpg
+PREDICTED: 5
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00077.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00005.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00026.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00003.jpg
+PREDICTED: 5
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00003.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00057.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00086.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00076.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00057.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00096.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00011.jpg
+PREDICTED: 8
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00085.jpg
+PREDICTED: 7
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00013.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00064.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00028.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00096.jpg
+PREDICTED: 7
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00087.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00052.jpg
+PREDICTED: 5
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00018.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00043.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00043.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00047.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00070.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00077.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00099.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00091.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00002.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00036.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00086.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00043.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00001.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00054.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00046.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00079.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00043.jpg
+PREDICTED: 5
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00020.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00071.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00040.jpg
+PREDICTED: 8
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00001.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00017.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00009.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00072.jpg
+PREDICTED: 3
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00030.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00042.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00048.jpg
+PREDICTED: 6
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00057.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00078.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00015.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00064.jpg
+PREDICTED: 8
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/eight_00071.jpg
+PREDICTED: 3
+EXPECTED : 8
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00013.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00061.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00031.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00025.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00070.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00075.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00060.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/nine_00048.jpg
+PREDICTED: 9
+EXPECTED : 9
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00075.jpg
+PREDICTED: 5
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00032.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00096.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/two_00022.jpg
+PREDICTED: 2
+EXPECTED : 2
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00038.jpg
+PREDICTED: 5
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/seven_00078.jpg
+PREDICTED: 7
+EXPECTED : 7
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/one_00019.jpg
+PREDICTED: 1
+EXPECTED : 1
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00051.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00024.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/six_00098.jpg
+PREDICTED: 5
+EXPECTED : 6
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/zero_00021.jpg
+PREDICTED: 0
+EXPECTED : 0
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00069.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/five_00097.jpg
+PREDICTED: 5
+EXPECTED : 5
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/four_00059.jpg
+PREDICTED: 4
+EXPECTED : 4
+-------
+IMAGE: /home/danieleb/ML/mnist/input/mnist_jpg/test/three_00071.jpg
+PREDICTED: 3
+EXPECTED : 3
+-------
+             precision    recall  f1-score   support
+
+       zero       1.00      0.86      0.92       100
+        one       0.96      1.00      0.98       100
+        two       0.90      0.82      0.86       100
+      three       0.66      0.88      0.75       100
+       four       1.00      0.72      0.84       100
+       five       0.51      0.99      0.67       100
+        six       0.97      0.76      0.85       100
+      seven       0.81      0.97      0.88       100
+      eight       1.00      0.23      0.37       100
+       nine       0.93      0.89      0.91       100
+
+avg / total       0.87      0.81      0.80      1000
+
+SKLEARN Accuracy = 0.81
+
+
+TOP-5 ACCURACY                    = 1.00 
+TOP-5 FALSE                       =  0
+TOP-5 TRUE                        =  1000
+
+
+TOTAL NUMBER OF TRUE  PREDICTIONS =  812
+TOTAL NUMBER OF FALSE PREDICTIONS =  188
+MANUALLY COMPUTED RECALL = 0.81 
