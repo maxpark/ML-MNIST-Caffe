@@ -1,0 +1,10 @@
+logfile_dpu_top5.txt  has  250  lines
+number of total images predicted  0
+number of top1 false predictions  0
+number of top1 right predictions  0
+number of top5 false predictions  0
+number of top5 right predictions  0
+Traceback (most recent call last):
+  File "check_dpu_runtime_accuracy.py", line 126, in <module>
+    top1_accuracy = float(top1_true)/(top1_true+top1_false) 
+ZeroDivisionError: float division by zero
